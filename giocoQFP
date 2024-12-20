@@ -1,0 +1,140 @@
+import random
+
+#Introduzione
+print("Benvenuto in 'Quest for Pythonia'!")
+print("Re Pythonius ti ha convocato! Il Regno di Pythonia ha bisogno di un eroe per sconfiggere 3 mostri...")
+print("Tra cui il loro boss: Tridentinius, il flagello di Pythonia!")
+
+#Scelta del nome
+nome_eroe = input("Eroe! Finalmente sei qui! Qual è il tuo nome?: ")
+
+#Spiegazione delle regole
+print("\nBenvenuto,", nome_eroe,"!")
+print("Le regole del gioco sono semplici...\n")
+print("Ci sono tre attacchi che puoi utilizzare:")
+print("1. Esplosione Cosmica (batte il Taglio Dimensionale). Un'esplosione in grado di bruciare le stelle!")
+print("2. Vortice Gravitazionale (batte l'Esplosione Cosmica). Un buco nero in grado di divorare quasi ogni cosa!")
+print("3. Taglio Dimensionale (batte il Vortice Gravitazionale). Uno squarcio che può solo essere deviato da una forte esplosione!\n")
+print("I mostri sono armati delle tue stesse mosse. Tali mosse sono così potenti da uccidere chiunque in un colpo solo!")
+print("L'unico modo per non farsi colpire è quello di utilizzare la stessa mossa del tuo avversario contemporaneamente!")
+print("\nMi raccomando fai attenzione specialmente a Tridentinius, si dice che abbia 7 vite... proprio come i gatti!")
+print("Ora non resta altro che augurarti buona fortuna. Ne avrai proprio bisogno! Letteralmente.\n")
+
+print("-----------------------------------------------------------------------------------------------------------------------------")
+
+#Vite dell'eroe e dei mostri
+vite_eroe = 5
+vite_primus = 1
+vite_secundius = 3
+vite_tridentinius = 7
+
+#Definizione e gestione dei mostri
+mostri = [
+    {"nome": "Primus, signore dei deboli", "vite": vite_primus},
+    {"nome": "Secundius, signore dei potenti", "vite": vite_secundius},
+    {"nome": "Tridentinius, signore dei signori", "vite": vite_tridentinius}
+]
+
+#Ciclo battaglia generale
+for i in range(3):
+    mostro = mostri[i]
+    nome_mostro = mostro["nome"]
+    vite_mostro = mostro["vite"]
+
+    print(f"\nStai affrontando {nome_mostro}. Con {vite_mostro} vite!")
+
+    while vite_mostro > 0 and vite_eroe > 0:
+        print(f"\nVite {nome_eroe}: {vite_eroe} | Vite {nome_mostro}: {vite_mostro}\n")
+
+#Scelta dell'attacco dell'eroe
+
+        print("Scegli il tuo attacco:")
+        print("1. Esplosione Cosmica")
+        print("2. Vortice Gravitazionale")
+        print("3. Taglio Dimensionale")
+        scelta = input("Scegli il numero corrispondente all attacco da sferrare: ")
+
+        while scelta not in ["1", "2", "3"]:
+            print("Numero non valido! Scegli 1, 2 o 3. Veloce! Pythonia conta su di te!")
+            scelta = input("Scegli il numero corrispondente all attacco da sferrare: ")
+
+#Definizione input Eroe e Mostro
+        attacco_eroe = int(scelta)
+        attacco_mostro = random.randint(1, 3)
+
+#Esecuzione attacco e gestione risultato
+
+
+#Gestione pareggio, vittoria e sconfitta generale
+        if attacco_eroe == attacco_mostro:
+            risultato = "pareggio"
+        elif (attacco_eroe == 1 and attacco_mostro == 2) or (attacco_eroe == 2 and attacco_mostro == 3) or (
+                attacco_eroe == 3 and attacco_mostro == 1):
+            risultato = "vittoria"
+        else:
+            risultato = "sconfitta"
+
+#Gestione vittoria Eroe
+        if risultato == "vittoria":
+            print(f"\n{nome_mostro} ha una vita in meno!")
+            if attacco_eroe == 1:
+                print(f"La tua Esplosione Cosmica ha disintegrato {nome_mostro}!!")
+            elif attacco_eroe == 2:
+                print(f"Il tuo Vortice Gravitazionale ha inghiottito {nome_mostro}!!")
+            elif attacco_eroe == 3:
+                print(f"Il tuo Taglio Dimensionale ha squarciato {nome_mostro}!!")
+            vite_mostro -= 1
+
+#Gestione vittoria mostro
+        elif risultato == "sconfitta":
+            print(f"\nHai perso una vita!")
+            if attacco_mostro == 1:
+                print(f"L'Esplosione Cosmica di {nome_mostro} ti ha disintegrato!")
+            elif attacco_mostro == 2:
+                print(f"Il Vortice Gravitazionale di {nome_mostro} ti ha inghiottito!")
+            elif attacco_mostro == 3:
+                print(f"Il Taglio Dimensionale di {nome_mostro} ti ha squarciato!")
+            vite_eroe -= 1
+
+#Gestione pareggio
+        else:
+            print(f"\nImpatto annullante! Entrambi avete scelto la stessa mossa. Nessuno perde una vita.")
+
+#Verifica di chi è morto
+        #NOTA1: Si intende come "morte definitiva" dato che canonicamente Eroi e mostri muoiono più volte.
+        #NOTA2: Eccetto Primius ovviamente, dato che è il più scarso ha una vita sola.
+        if vite_mostro == 0:
+            print(f"{nome_mostro} ucciso definitivamente!\n")
+
+#Messaggio specifico per ogni mostro sconfitto
+            if nome_mostro == "Primus, signore dei deboli":
+                print(f"{nome_eroe}, hai sconfitto Primus! Troppo facile!\n")
+            elif nome_mostro == "Secundius, signore dei potenti":
+                print(f"{nome_eroe}, hai sconfitto Secundius! Un osso duro, ma non abbastanza!\n")
+            elif nome_mostro == "Tridentinius, signore dei signori":
+                print(f"{nome_eroe}, hai sconfitto Tridentinius! La tua forza è senza pari!\n")
+
+#Messaggio di sconfitta e "scelta" di resurrezione (non è una vera scelta)
+        if vite_eroe == 0:
+            print(f"Sei stato sconfitto... e la morte ti assale, {nome_eroe}. Cosa farai ora?")
+            # Inizio della "scelta" finale
+            while True:
+                finta_scelta = input("Vuoi risorgere? (sì/no): ").lower()
+
+                if finta_scelta == "no":
+                    print(f"\nNon avevi scelta, {nome_eroe}.")
+                    print(f"Tridentinius ha preso la tua anima al momento della tua vera morte.")
+                    print(f"Per questo la resurrezione ha fallito... Come tu hai fallito nel difendere Pythonia.")
+                    print(f"Forse Re Pythonius avrebbe dovuto scegliere qualcun altro!")
+                    exit()
+                else:
+                    print(f"Muhahaha, {nome_eroe} scelta sbagliata! L'unica risposta corretta è no!")
+
+#L'Eroe vince (ma a che costo?)
+if vite_eroe > 0:
+    print("\nCongratulazioni! Hai sconfitto Tridentinius, il flagello di Pythonia!")
+    print("Pace e prospertà aspettano queste terre... o di ciò che ne resta.")
+    print("Di Re Pythonius e della sua gente non è rimasta neanche la polvere...")
+    print(f"Cos'è quella faccia, {nome_eroe}? Cosa ti aspettavi? Leggi i nomi di quelle mosse per favore...")
+    print('Vabbè, grazie per aver "salvato" Pythonia, "Eroe" dei miei stivali!')
+    print(f"Ora va' {nome_eroe}, il tuo ruolo è finito.")
